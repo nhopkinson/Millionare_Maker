@@ -1,5 +1,5 @@
 {
-    "name": "Millionare_Maker",
+    "name": "Millionaire_Maker",
     "dockerComposeFile": "docker-compose.yml",
     "service": "web",
     "workspaceFolder": "/code",
@@ -12,6 +12,6 @@
     "forwardPorts": [
       8000
     ],
-    "postCreateCommand": "pip install -r requirements.txt && django-admin startproject millionaire_maker . && python manage.py migrate"
+    "postCreateCommand": "pip install -r requirements.txt && python manage.py migrate"
 }
   
