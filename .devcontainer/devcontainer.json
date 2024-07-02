@@ -1,0 +1,17 @@
+{
+    "name": "Millionare_Maker",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "web",
+    "workspaceFolder": "/code",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+      "ms-python.python"
+    ],
+    "forwardPorts": [
+      8000
+    ],
+    "postCreateCommand": "pip install -r requirements.txt && django-admin startproject millionaire_maker . && python manage.py migrate"
+}
+  
