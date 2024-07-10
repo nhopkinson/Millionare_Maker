@@ -3,11 +3,13 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   web:
     build:
@@ -17,15 +19,15 @@ services:
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - "${APP_PORT}:8000"
     depends_on:
       - db
     environment:
-      - DJANGO_DB_HOST=db
-      - DJANGO_DB_PORT=5432
-      - DJANGO_DB_NAME=mydatabase
-      - DJANGO_DB_USER=myuser
-      - DJANGO_DB_PASSWORD=mypassword
+      - DJANGO_DB_HOST=${DJANGO_DB_HOST}
+      - DJANGO_DB_PORT=${DJANGO_DB_PORT}
+      - DJANGO_DB_NAME=${DJANGO_DB_NAME}
+      - DJANGO_DB_USER=${DJANGO_DB_USER}
+      - DJANGO_DB_PASSWORD=${DJANGO_DB_PASSWORD}
 
 # volumes is used for data that needs to be persisted outside of the container
 volumes:
