@@ -1,12 +1,17 @@
-<head xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+  <head xmlns="http://www.w3.org/1999/html">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Homepage</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
-    <body>
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+  </head>
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
@@ -136,6 +141,15 @@
         </main>
       </div>
     </div>
-
-    </body>
-</head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+    <script type="text/javascript">
+      $.get('{% url "line_chart_json" %}', function(data) {
+        var ctx = $("#myChart").get(0).getContext("2d");
+        new Chart(ctx, {
+          type: 'line', data: data
+        });
+      });
+    </script>
+  </body>
+</html>
