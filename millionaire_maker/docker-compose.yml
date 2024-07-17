@@ -2,14 +2,34 @@
 services:
   db:
     image: postgres
+    build:
+      context: ./database
+      dockerfile: ./Dockerfile
+    restart: always
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
 
   web:
     build:
@@ -21,7 +41,8 @@ services:
     ports:
       - "${APP_PORT}:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DJANGO_DB_HOST=${DJANGO_DB_HOST}
       - DJANGO_DB_PORT=${DJANGO_DB_PORT}
@@ -31,4 +52,6 @@ services:
 
 # volumes is used for data that needs to be persisted outside of the container
 volumes:
+  pgadmin-data:
   postgres_data:
+
