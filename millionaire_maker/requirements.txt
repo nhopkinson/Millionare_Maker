@@ -3,3 +3,5 @@ psycopg2-binary
 python-decouple==3.1
 django-bootstrap-v5
 django-chartjs
+requests
+polygon-api-client
