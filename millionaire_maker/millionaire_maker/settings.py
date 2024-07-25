@@ -28,6 +28,8 @@ DEBUG = config('DEBUG', cast=bool, default=True)
 
 ALLOWED_HOSTS = []
 
+# API_KEY
+API_KEY = config('API_KEY')
 
 # Application definition
 

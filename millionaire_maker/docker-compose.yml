@@ -4,9 +4,6 @@ services:
     env_file:
       - path: .env
     image: postgres
-    build:
-      context: ./database
-      dockerfile: ./Dockerfile
     restart: always
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
@@ -44,9 +41,6 @@ services:
       - .:/code
     ports:
       - "${APP_PORT}:8000"
-    depends_on:
-      db:
-        condition: service_healthy
     environment:
       - DJANGO_DB_HOST=${DJANGO_DB_HOST}
       - DJANGO_DB_PORT=${DJANGO_DB_PORT}
