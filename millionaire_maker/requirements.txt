@@ -5,3 +5,4 @@ django-bootstrap-v5
 django-chartjs
 requests
 polygon-api-client
+python-dotenv==1.0.1

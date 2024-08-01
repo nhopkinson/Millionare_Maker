@@ -1,40 +1,38 @@
-from polygon.stocks import StocksClient
+from polygon import RESTClient
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-class StockClient():
-    def __init__(self, client):
-        client = self.client
+class StockClient:
+    def __init__(self, api_key):
+        self.client = RESTClient(api_key)
 
-    ticker = "AAPL"
+    def get_aggregates(self, ticker, from_date, to_date, multiplier=1,
+                       timespan="minute", limit=50000):
+        agg = []
+        for a in self.client.list_aggs(ticker=ticker, multiplier=multiplier,
+                       timespan=timespan, from_=from_date, to=to_date, limit=limit):
+            agg.append(a)
 
-    # List Aggregates (Bars)
-    client = StocksClient(api_key=os.getenv("API_KEY"))
-    aggs = []
-    for a in client.list_aggs(ticker=ticker, multiplier=1, timespan="minute", from_="2023-01-01", to="2023-06-13",
-                              limit=50000):
-        aggs.append(a)
+        return agg
 
-    print(aggs)
+    def get_last_trade(self, ticker):
+        return self.client.get_last_trade(ticker=ticker)
 
-    # Get Last Trade
-    trade = client.get_last_trade(ticker=ticker)
-    print(trade)
+    def list_trades(self, ticker, timestamp):
+        return list(self.client.list_trades(ticker=ticker, timestamp=timestamp))
 
-    # List Trades
-    trades = client.list_trades(ticker=ticker, timestamp="2022-01-04")
-    for trade in trades:
-        print(trade)
+    def get_last_quote(self, ticker):
+        return self.client.get_last_quote(ticker=ticker)
 
-    # Get Last Quote
-    quote = client.get_last_quote(ticker=ticker)
-    print(quote)
-
-    # List Quotes
-    quotes = client.list_quotes(ticker=ticker, timestamp="2022-01-04")
-    for quote in quotes:
-        print(quote)
+    def list_quotes(self, ticker, timestamp):
+        return list(self.client.list_quotes(ticker=ticker, timestamp=timestamp))
 
 
-stock_client = StockClient
-stock_client.quote
+api_key = os.getenv("API_KEY")
+if not api_key:
+    raise ValueError("API_KEY environment variable not set")
+
+stock_client = StockClient(api_key)
