@@ -22,7 +22,7 @@ from .views import line_chart, line_chart_json
 
 urlpatterns = [
     path("",views.index,name ="index"),
-
+    path("join/", views.join, name = 'join'),
     path("about/", views.about),
     path("admin/", admin.site.urls),
     path('chart', line_chart, name='line_chart'),
