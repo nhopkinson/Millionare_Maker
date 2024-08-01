@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "bootstrap5",
     "chartjs",
     "stock_api",
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
