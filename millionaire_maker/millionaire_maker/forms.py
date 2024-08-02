@@ -5,4 +5,3 @@ class MemberForm(forms.ModelForm):
     class Meta:
         model = Member
         fields = ['user_name','user_email','user_password']
-git
