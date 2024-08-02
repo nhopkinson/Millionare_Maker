@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+    <h1>Join Today!</h1>
+
+        <form method="POST" action="{% url 'join' %}">
+<!-- this line is to connect all the data in this form to the join url in the views       -->
+        {% csrf_token %}
+          <div class ="mb-3">
+              <input type="text" class="form-control" id="exampleInputUser"
+              placeHolder = "Enter A Username" name="user_name">
+          </div>
+
+          <div class="mb-3">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+              placeHolder = "Enter Your Email Adress" name="user_email">
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter a Password"
+                   name = "user_password">
+          </div>
+          <button type="submit" class="btn btn-success">Join</button>
+        </form>
+
+{% endblock %}
