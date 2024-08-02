@@ -19,13 +19,14 @@ from django.urls import path, include
 
 from . import views
 from .views import line_chart, line_chart_json
+from ..stock_api.stocks import views
 
 urlpatterns = [
-    path("", views.index, name="index"),
+#    path("", views.index, name="index"),
 
-    path("about/", views.about),
+#    path("about/", views.about),
     path("admin/", admin.site.urls),
-    path('chart', line_chart, name='line_chart'),
-    path('chartJSON', line_chart_json, name='line_chart_json'),
+#    path('chart', line_chart, name='line_chart'),
+#    path('chartJSON', line_chart_json, name='line_chart_json'),
     path('stock_api/', include('stock_api.urls')),
 ]

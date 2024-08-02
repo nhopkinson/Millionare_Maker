@@ -1,7 +1,6 @@
-from django.contrib import admin
 from django.urls import path
-from . import views
+from .views import StockView
 
 urlpatterns = [
-    path('', views.market_view, name='market-view'),
+    path('stocks/', StockView.as_view(), name='stock_view'),
 ]
