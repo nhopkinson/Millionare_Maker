@@ -1,53 +1,17 @@
 
 services:
-  web:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - "${APP_PORT}:8000"
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      - DJANGO_DB_HOST=${DJANGO_DB_HOST}
-      - DJANGO_DB_PORT=${DJANGO_DB_PORT}
-      - DJANGO_DB_NAME=${DJANGO_DB_NAME}
-      - DJANGO_DB_USER=${DJANGO_DB_USER}
-      - DJANGO_DB_PASSWORD=${DJANGO_DB_PASSWORD}
   db:
+    env_file:
+      - path: .env
     image: postgres
-    build:
-      context: ./database
-      dockerfile: ./Dockerfile
-    restart: always
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
 
   web:
     env_file:
@@ -61,8 +25,7 @@ services:
     ports:
       - "${APP_PORT}:8000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     environment:
       - DJANGO_DB_HOST=${DJANGO_DB_HOST}
       - DJANGO_DB_PORT=${DJANGO_DB_PORT}
@@ -72,6 +35,4 @@ services:
 
 # volumes is used for data that needs to be persisted outside of the container
 volumes:
-  pgadmin-data:
   postgres_data:
-

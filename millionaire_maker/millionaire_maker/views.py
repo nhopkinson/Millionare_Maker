@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
 from users.models import Member
+
 from .forms import MemberForm
 
 def index(request):
