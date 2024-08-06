@@ -1,0 +1,38 @@
+<!-- stock_api/stocks/test_temp/test.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Market Data</title>
+</head>
+<body>
+    <h1>Market Data for AAPL</h1>
+
+    <h2>Aggregates</h2>
+    <ul>
+    {% for item in aggregates %}
+        <li>{{ item }}</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Last Trade</h2>
+    <p>{{ last_trade }}</p>
+
+    <h2>Trades</h2>
+    <ul>
+    {% for trade in trades %}
+        <li>{{ trade }}</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Last Quote</h2>
+    <p>{{ last_quote }}</p>
+
+    <h2>Quotes</h2>
+    <ul>
+    {% for quote in quotes %}
+        <li>{{ quote }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
