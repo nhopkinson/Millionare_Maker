@@ -6,3 +6,4 @@ django-chartjs
 requests
 polygon-api-client
 python-dotenv==1.0.1
+djangorestframework

@@ -39,8 +39,7 @@ class StockView(TemplateView):
     def market_view(self, request):
         ticker = "AAPL"
         from_date = "2023-01-01"
-        to_date = "2023-06-13"
-
+        to_date = "2023-01-02"
         aggregates = stock_client.get_aggregates(ticker, from_date, to_date)
         last_trade = stock_client.get_last_trade(ticker)
         trades = stock_client.list_trades(ticker, "2022-01-04")
@@ -48,15 +47,15 @@ class StockView(TemplateView):
         quotes = stock_client.list_quotes(ticker, "2022-01-04")
 
         context = {
-            'aggregates': aggregates,
-            'last_trade': last_trade,
-            'trades': trades,
-            'last_quote': last_quote,
-            'quotes': quotes
+            'aggregates': [10, 20, 30],
+            'last_trade': 45,
+            'trades': [10, 20, 30],
+            'last_quote': 45,
+            'quotes': [10, 20, 30]
         }
-        return render(request, 'test.html', context)
+        return render(request, 'test.html', context=context)
 
 
-stock_view = TemplateView.as_view(template_name='test.html')
+stock_view = StockView.as_view(template_name='test.html')
 
 

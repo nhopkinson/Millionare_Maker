@@ -13,7 +13,8 @@ class StockClient:
                        timespan="minute", limit=50000):
         agg = []
         for a in self.client.list_aggs(ticker=ticker, multiplier=multiplier,
-                       timespan=timespan, from_=from_date, to=to_date, limit=limit):
+                                       timespan=timespan, from_=from_date, to=to_date,
+                                       limit=limit):
             agg.append(a)
 
         return agg
@@ -35,4 +36,4 @@ api_key = os.getenv("API_KEY")
 if not api_key:
     raise ValueError("API_KEY environment variable not set")
 
-stock_client = StockClient(api_key)
+stock_client = StockClient(api_key=api_key)

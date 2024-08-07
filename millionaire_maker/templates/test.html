@@ -10,7 +10,7 @@
 
     <h2>Aggregates</h2>
     <ul>
-    {% for item in aggregates %}
+    {% for item in context.aggregates %}
         <li>{{ item }}</li>
     {% endfor %}
     </ul>
@@ -20,7 +20,7 @@
 
     <h2>Trades</h2>
     <ul>
-    {% for trade in trades %}
+    {% for trade in context.trades %}
         <li>{{ trade }}</li>
     {% endfor %}
     </ul>
