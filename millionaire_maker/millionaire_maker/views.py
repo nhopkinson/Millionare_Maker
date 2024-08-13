@@ -1,15 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
-from polygon import RESTClient
-from .client import stock_client
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from django.views import View
+from .fh_client import fh_client
+#from .ws import ws_client
 
 
 def index(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
+
+
 def about(request):
     return render(request, 'about.html')
 
@@ -34,28 +36,69 @@ class LineChartJSONView(BaseLineChartView):
 line_chart = TemplateView.as_view(template_name='line_chart.html')
 line_chart_json = LineChartJSONView.as_view()
 
-# STOCK APP VIEW
-class StockView(TemplateView):
-    def market_view(self, request):
+
+# FinnHub View Class
+class FinancialsView(View):
+    def get(self, request):
         ticker = "AAPL"
-        from_date = "2023-01-01"
-        to_date = "2023-01-02"
-        aggregates = stock_client.get_aggregates(ticker, from_date, to_date)
-        last_trade = stock_client.get_last_trade(ticker)
-        trades = stock_client.list_trades(ticker, "2022-01-04")
-        last_quote = stock_client.get_last_quote(ticker)
-        quotes = stock_client.list_quotes(ticker, "2022-01-04")
+        from_date = "2024-06-01"
+        to_date = "2024-06-10"
+
+        financials_data = fh_client.get_basic_financials(ticker)
+        quote_data = fh_client.get_quote(ticker)
+        if quote_data:
+            current_price = quote_data['c']
+            previous_close = quote_data['pc']
+            change = current_price - previous_close
+            percent_change = (change / previous_close) * 100
+        else:
+            current_price = previous_close = change = percent_change = None
 
         context = {
-            'aggregates': [10, 20, 30],
-            'last_trade': 45,
-            'trades': [10, 20, 30],
-            'last_quote': 45,
-            'quotes': [10, 20, 30]
+            'financials': financials_data,
+            'quote': {
+                'c': current_price,
+                'pc': previous_close,
+                'change': change,
+                'percent_change': percent_change,
+                'h': quote_data.get('h'),
+                'l': quote_data.get('l'),
+                'o': quote_data.get('o')
+            }
         }
-        return render(request, 'test.html', context=context)
+
+        return render(request, 'basic_financials.html', context=context)
 
 
-stock_view = StockView.as_view(template_name='test.html')
+class CompanyNewsView(View):
+    def get(self, request):
+        ticker = "AAPL"
+        from_date = "2024-06-01"
+        to_date = "2024-06-10"
+        # date format: YYYY-MM-DD
+        company_news = fh_client.get_company_news(ticker, from_date=from_date, to_date=to_date)
+
+        context = {
+            'company_news': company_news
+        }
+
+        return render(request, 'company_news.html', context=context)
 
 
+fh_financials_view = FinancialsView.as_view()
+fh_company_news = CompanyNewsView.as_view()
+
+
+# class RealTimeDataView(View):
+#     def get(self, request):
+#         latest_data = ws_client.get_latest_data()
+#         context = {
+#             'latest_data': latest_data
+#         }
+#         return render(request, 'real_time_data.html', context=context)
+#
+#     def post(self, request):
+#         # Handle data subscription or update if needed
+#         return self.get(request)  # For simplicity, return the same data
+#
+# real_time_data = RealTimeDataView.as_view()

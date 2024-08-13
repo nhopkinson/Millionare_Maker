@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Data</title>
+</head>
+<body>
+    <h1>Real-Time Data for {{ latest_data.symbol }}</h1>
+    {% if latest_data %}
+        <ul>
+            <li><strong>Current Price:</strong> {{ latest_data.c }}</li>
+            <li><strong>High Price of the Day:</strong> {{ latest_data.h }}</li>
+            <li><strong>Low Price of the Day:</strong> {{ latest_data.l }}</li>
+            <li><strong>Open Price of the Day:</strong> {{ latest_data.o }}</li>
+            <li><strong>Previous Close Price:</strong> {{ latest_data.pc }}</li>
+        </ul>
+    {% else %}
+        <p>No real-time data available.</p>
+    {% endif %}
+</body>
+</html>

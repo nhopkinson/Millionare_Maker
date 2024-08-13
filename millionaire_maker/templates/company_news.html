@@ -1,0 +1,30 @@
+<!-- Company News -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Market Data</title>
+</head>
+<body>
+    <!-- Company News Section -->
+    <h2>Company News</h2>
+    {% if company_news %}
+        <ul>
+            {% for news in company_news %}
+                <li>
+                    <h3>{{ news.headline }}</h3>
+                    <p><strong>Date:</strong> {{ news.datetime|date:"F j, Y" }}</p>
+                    <p><strong>Source:</strong> {{ news.source }}</p>
+                    <p><strong>Summary:</strong> {{ news.summary }}</p>
+                    <p><a href="{{ news.url }}" target="_blank">Read more</a></p>
+                    {% if news.image %}
+                        <img src="{{ news.image }}" alt="News Image" style="max-width:200px;">
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No company news available.</p>
+    {% endif %}
+</body>
+</html>
