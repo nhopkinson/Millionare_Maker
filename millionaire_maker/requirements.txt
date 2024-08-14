@@ -5,3 +5,7 @@ django-bootstrap-v5
 django-chartjs
 requests
 polygon-api-client
+python-dotenv==1.0.1
+websocket-client==1.8.0
+websockets==12.0
+finnhub-python==2.4.20

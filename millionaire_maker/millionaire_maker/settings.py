@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bootstrap5",
     "chartjs",
-    "stock_api",
-    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [

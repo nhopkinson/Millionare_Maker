@@ -1,0 +1,69 @@
+<!-- Basic Financial Data -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Data</title>
+</head>
+<body>
+    <h1>Financial Data for {{ financials.symbol }}</h1>
+
+    <!-- Financial Data Section -->
+    <h2>Annual Data</h2>
+    {% if financials.series.annual %}
+        <h3>Current Ratio</h3>
+        <ul>
+            {% for item in financials.series.annual.currentRatio %}
+                <li>{{ item.period }}: {{ item.v }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Sales Per Share</h3>
+        <ul>
+            {% for item in financials.series.annual.salesPerShare %}
+                <li>{{ item.period }}: {{ item.v }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Net Margin</h3>
+        <ul>
+            {% for item in financials.series.annual.netMargin %}
+                <li>{{ item.period }}: {{ item.v }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No annual data available.</p>
+    {% endif %}
+
+    <!-- Metrics Section -->
+    <h2>Metrics</h2>
+    <ul>
+        {% if financials.metric %}
+            <li>10 Day Average Trading Volume: {{ financials.metric.10DayAverageTradingVolume }}</li>
+            <li>52 Week High: {{ financials.metric.52WeekHigh }}</li>
+            <li>52 Week Low: {{ financials.metric.52WeekLow }}</li>
+            <li>Beta: {{ financials.metric.beta }}</li>
+        {% else %}
+            <li>No metrics data available.</li>
+        {% endif %}
+    </ul>
+
+    <!-- Quote Data Section -->
+    <h2>Quote Data</h2>
+    {% if quote %}
+        <ul>
+            <li><strong>Current Price:</strong> {{ quote.c }}</li>
+            <li><strong>Change:</strong> {{ quote.change|floatformat:"2" }}</li>
+            <li><strong>Percent Change:</strong> {{ quote.percent_change|floatformat:"2" }}%</li>
+            <li><strong>High Price of the Day:</strong> {{ quote.h }}</li>
+            <li><strong>Low Price of the Day:</strong> {{ quote.l }}</li>
+            <li><strong>Open Price of the Day:</strong> {{ quote.o }}</li>
+            <li><strong>Previous Close Price:</strong> {{ quote.pc }}</li>
+        </ul>
+    {% else %}
+        <p>No quote data available.</p>
+    {% endif %}
+</body>
+</html>
+
+
+
