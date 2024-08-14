@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    {% for item in all %}
+        <strong>User Name: {{ item.user_name }} Email: {{ item.user_email }}</strong>
+        <br><br/>
+    {% endfor %}
+
+{% endblock %}
+

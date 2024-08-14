@@ -4,16 +4,10 @@ services:
     env_file:
       - path: .env
     image: postgres
-    restart: always
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
-      interval: 1s
-      timeout: 5s
-      retries: 10
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -28,7 +22,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - pgadmin_data:/var/lib/pgadmin
 
   web:
     env_file:
@@ -41,6 +35,8 @@ services:
       - .:/code
     ports:
       - "${APP_PORT}:8000"
+    depends_on:
+      - db
     environment:
       - DJANGO_DB_HOST=${DJANGO_DB_HOST}
       - DJANGO_DB_PORT=${DJANGO_DB_PORT}
@@ -50,6 +46,5 @@ services:
 
 # volumes is used for data that needs to be persisted outside of the container
 volumes:
-  pgadmin-data:
   postgres_data:
-
+  pgadmin_data:

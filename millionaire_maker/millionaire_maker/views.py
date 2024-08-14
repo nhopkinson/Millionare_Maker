@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-#from chartjs.views.lines import BaseLineChartView
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views import View
@@ -10,14 +9,30 @@ from .forms import StockSymbolForm
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.views.generic import TemplateView
+from chartjs.views.lines import BaseLineChartView
+from users.models import Member
 
+from .forms import MemberForm
 
 def index(request):
     return render(request, 'index.html')
 
 
 def about(request):
-    return render(request, 'about.html')
+    all_members = Member.objects.all
+    return render(request, 'about.html', {'all': all_members})
+
+def join(request):
+    if request.method == "POST":
+    # if its a post request (comes from the join.html) its doing something with the form,
+    # if its something else we just return get request for the join html
+        form = MemberForm(request.POST )
+        if form.is_valid():
+            form.save()
+    else:
+        form = MemberForm()
+    return render(request,'join.html', )
 
 
 # class LineChartJSONView(BaseLineChartView):
