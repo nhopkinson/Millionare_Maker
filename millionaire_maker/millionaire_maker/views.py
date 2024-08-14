@@ -87,7 +87,7 @@ class CompanyNewsView(View):
     def get(self, request):
         ticker = "AAPL"
         from_date = "2024-06-01"
-        to_date = "2024-06-10"
+        to_date = "2024-06-02"
         # date format: YYYY-MM-DD
         company_news = fh_client.get_company_news(ticker, from_date=from_date, to_date=to_date)
 
