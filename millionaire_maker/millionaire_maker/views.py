@@ -51,11 +51,9 @@ class FinancialsView(View):
         form = StockSymbolForm(request.POST)
         if form.is_valid():
             ticker = form.cleaned_data['ticker_symbol']  # Get the ticker from the form
-            from_date = "2024-06-01"
-            to_date = "2024-06-10"
-
             financials_data = fh_client.get_basic_financials(ticker)
             quote_data = fh_client.get_quote(ticker)
+
             if quote_data:
                 current_price = quote_data['c']
                 previous_close = quote_data['pc']
@@ -66,6 +64,7 @@ class FinancialsView(View):
 
             context = {
                 'form': form,
+                'ticker_symbol': ticker,
                 'financials': financials_data,
                 'quote': {
                     'c': current_price,
@@ -85,11 +84,12 @@ class FinancialsView(View):
 
 class CompanyNewsView(View):
     def get(self, request):
-        ticker = "AAPL"
-        from_date = "2024-06-01"
-        to_date = "2024-06-02"
-        # date format: YYYY-MM-DD
-        company_news = fh_client.get_company_news(ticker, from_date=from_date, to_date=to_date)
+        ticker = request.GET.get('ticker')
+        company_news = None
+        if ticker:
+            from_date = "2024-06-01"
+            to_date = "2024-06-02"
+            company_news = fh_client.get_company_news(ticker, from_date=from_date, to_date=to_date)
 
         context = {
             'company_news': company_news
