@@ -17,15 +17,15 @@ Including another URLconf
 from django.urls import path, include
 from django.contrib import admin
 from . import views
-from .views import line_chart, line_chart_json, fh_financials_view, fh_company_news
+from .views import fh_financials_view, fh_company_news
+
 
 urlpatterns = [
     path("", views.index, name="index"),
     path("about/", views.about),
     path("admin/", admin.site.urls),
-    path('chart', line_chart, name='line_chart'),
-    path('chartJSON', line_chart_json, name='line_chart_json'),
+    # path('chart', line_chart, name='line_chart'),
+    # path('chartJSON', line_chart_json, name='line_chart_json'),
     path('financials/', fh_financials_view, name='financials'),
     path('company_news/', fh_company_news, name='company_news'),
-    #path('live_data/', real_time_data, name='live_data'),
 ]

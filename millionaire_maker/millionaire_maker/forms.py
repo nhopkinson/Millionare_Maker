@@ -1,7 +1,6 @@
 from django import forms
-from users.models import Member
 
-class MemberForm(forms.ModelForm):
-    class Meta:
-        model = Member
-        fields = ['user_name','user_email','user_password']
+
+class StockSymbolForm(forms.Form):
+    ticker_symbol = forms.CharField(max_length=7, label= "Enter a ticker symbol")
+
