@@ -23,7 +23,6 @@ from .views import fh_financials_view, fh_company_news
 urlpatterns = [
     path("", views.index, name="index"),
     path("about/", views.about),
-    path("about/", views.about),
     path("admin/", admin.site.urls),
     # path('chart', line_chart, name='line_chart'),
     # path('chartJSON', line_chart_json, name='line_chart_json'),
