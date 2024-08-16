@@ -100,14 +100,24 @@ class FinancialsView(View):
 class CompanyNewsView(View):
     def get(self, request):
         ticker = request.GET.get('ticker')
+        from_date = request.GET.get('from_date')
+        to_date = request.GET.get('to_date')
         company_news = None
+        print(f"Ticker: {ticker}, From Date: {from_date}, To Date: {to_date}")  # Debugging
+
         if ticker:
-            from_date = "2024-06-01"
-            to_date = "2024-06-02"
-            company_news = fh_client.get_company_news(ticker, from_date=from_date, to_date=to_date)
+            if from_date and to_date:
+                company_news = fh_client.get_company_news(ticker, from_date=from_date, to_date=to_date)
+            else:
+                from_date = "2024-08-01"
+                to_date = "2024-08-15"
+                company_news = fh_client.get_company_news(ticker, from_date=from_date, to_date=to_date)
 
         context = {
-            'company_news': company_news
+            'company_news': company_news,
+            'ticker': ticker,
+            'from_date': from_date,
+            'to_date': to_date,
         }
 
         return render(request, 'company_news.html', context=context)

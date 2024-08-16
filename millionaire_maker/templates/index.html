@@ -12,12 +12,12 @@
   </head>
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Millionaire Maker</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" style="font-family: 'Palatino', serif; font-weight: bold">Millionaire Maker</a>
       <!-- Form for User Input Ticker Symbol -->
           <form method="POST" action="{% url 'financials' %}" class="form-inline my-2 my-lg-0" style="display: flex !important; align-items: center; white-space: nowrap">
             {% csrf_token %}
-            <input class="form-control mr-sm-2" type="search" name="ticker_symbol" placeholder="Enter Ticker Symbol" aria-label="Search" required>
-            <button type="submit" class="btn btn-success">Confirm</button>
+            <input class="form-control mr-sm-2" type="search" name="ticker_symbol" style="font-family: 'Palatino', serif; " placeholder="Enter Ticker Symbol" aria-label="Search" required>
+            <button type="submit" class="btn btn-success" style="font-family: 'Palatino', serif; font-weight: bold; margin-left: 5px">Confirm</button>
           </form>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -25,6 +25,7 @@
         </li>
       </ul>
     </nav>
+
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -57,7 +58,7 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">Dashboard</h1>
+            <h1 class="h2" style="font-family: 'Palatino', serif; font-weight: bold">Dashboard</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
               <div class="btn-group mr-2">
                 <button class="btn btn-sm btn-outline-secondary">Share</button>
@@ -70,128 +71,124 @@
             </div>
           </div>
 
-          <canvas class="my-4 chartjs-render-monitor" id="myChart" width="554" height="233" style="display: block; width: 554px; height: 233px;"></canvas>
-
-        <div class="parent-financial-data">
-          <!-- Display Financial Data Section -->
-          {% if financials %}
-            <h2>Financial Data for {{ financials.symbol }}</h2>
-          <div class="annual-financial-data">
-            <h3>Annual Data</h3>
-            {% if financials.series.annual %}
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Current Ratio</th>
-                    <th scope="col">Sales Per Share</th>
-                    <th scope="col">Net Margin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {% for item in financials.series.annual.currentRatio %}
-                      {% if forloop.first %}
-                    <th scope="row">{{ item.period }}</th>
-                    <td>{{ item.v }}</td>
-                      {% endif %}
-                    {% endfor %}
-                    {% for item in financials.series.annual.salesPerShare %}
-                      {% if forloop.first %}
-                    <td>{{ item.v }} </td>
-                      {% endif %}
-                    {% endfor %}
-                    {% for item in financials.series.annual.netMargin %}
-                      {% if forloop.first %}
-                    <td>{{ item.v }} </td>
-                      {% endif %}
-                    {% endfor %}
-                  </tr>
-                </tbody>
-              </table>
-            {% endif %}
-          </div>
-
-            <div class="metric-financial-data">
-              <h3>Metrics</h3>
-            {% if financials.metric %}
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">10 Day Average Trading Volume</th>
-                    <th scope="col">52 Week High</th>
-                    <th scope="col">52 Week Low</th>
-                    <th scope="col">Beta</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ financials.metric.10DayAverageTradingVolume }}</td>
-                    <td>{{ financials.metric.52WeekHigh }} </td>
-                    <td>{{ financials.metric.52WeekLow }} </td>
-                    <td>{{ financials.metric.beta }} </td>
-                  </tr>
-                </tbody>
-              </table>
-            {% endif %}
+          <div class="parent-financial-data">
+            <!-- Display Financial Data Section -->
+            {% if financials %}
+              <h2 style="font-family: 'Palatino', serif; font-weight: bold; margin-top: 40px; border-bottom: 1px solid grey; text-transform: uppercase;">{{ financials.symbol }}</h2>
+              <h3 style="font-family: 'Palatino', serif; font-weight: bold; margin-top: 20px">Annual Data</h3>
+              <div class="annual-financial-data" style="border: 1px solid black">
+              {% if financials.series.annual %}
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Date</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Current Ratio</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Sales Per Share</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Net Margin</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {% for item in financials.series.annual.currentRatio %}
+                        {% if forloop.first %}
+                      <th scope="row">{{ item.period }}</th>
+                      <td>{{ item.v }}</td>
+                        {% endif %}
+                      {% endfor %}
+                      {% for item in financials.series.annual.salesPerShare %}
+                        {% if forloop.first %}
+                      <td>{{ item.v }} </td>
+                        {% endif %}
+                      {% endfor %}
+                      {% for item in financials.series.annual.netMargin %}
+                        {% if forloop.first %}
+                      <td>{{ item.v }} </td>
+                        {% endif %}
+                      {% endfor %}
+                    </tr>
+                  </tbody>
+                </table>
+              {% endif %}
             </div>
 
-          <div>
-            <h2>Quote Data</h2>
-            <div class="quote-financial-data" style="border: 1px solid black">
-            {% if quote %}
-              <table class="table table-striped " style="margin-right: 10px border-bottom: 1px solid grey">
-                <thead>
-                  <tr>
-                    <th scope="col">Current Price</th>
-                    <th scope="col">Change</th>
-                    <th scope="col">Percent Change</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ quote.c }}</td>
-                    <td>{{ quote.change|floatformat:"2" }} </td>
-                    <td>{{ quote.percent_change|floatformat:"2" }} </td>
-                  </tr>
-                </tbody>
-              </table>
-              <table class="table table-striped" style="margin-right: 10px border-bottom: 1px solid grey">
-                <thead>
-                  <tr>
-                    <th scope="col">High Price of the Day</th>
-                    <th scope="col">Low Price of the Day</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ quote.h }}</td>
-                    <td>{{ quote.l }} </td>
-                  </tr>
-                </tbody>
-              </table>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Open Price of the Day</th>
-                    <th scope="col">Previous Close Price</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ quote.o }}</td>
-                    <td>{{ quote.pc }} </td>
-                  </tr>
-                </tbody>
-              </table>
+            <h3 style="font-family: 'Palatino', serif; font-weight: bold; margin-top: 50px">Metrics</h3>
+            <div class="metric-financial-data" style="border: 1px solid black">
+              {% if financials.metric %}
+                <table class="table table-striped" style="margin-right: 10px border-bottom: 1px solid grey">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">10 Day Average Trading Volume</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">52 Week High</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">52 Week Low</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Beta</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ financials.metric.10DayAverageTradingVolume }}</td>
+                      <td>{{ financials.metric.52WeekHigh }} </td>
+                      <td>{{ financials.metric.52WeekLow }} </td>
+                      <td>{{ financials.metric.beta }} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              {% endif %}
+              </div>
+
+            <div>
+              <h2 style="font-family: 'Palatino', serif; font-weight: bold; margin-top: 50px">Quote Data</h2>
+              <div class="quote-financial-data" style="border: 1px solid black">
+              {% if quote %}
+                <table class="table table-striped " style="margin-right: 10px border-bottom: 1px solid grey">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Current Price</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Change</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Percent Change</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ quote.c }}</td>
+                      <td>{{ quote.change|floatformat:"2" }} </td>
+                      <td>{{ quote.percent_change|floatformat:"2" }} </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table table-striped" style="margin-right: 10px border-bottom: 1px solid grey">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">High Price of the Day</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Low Price of the Day</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ quote.h }}</td>
+                      <td>{{ quote.l }} </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Open Price of the Day</th>
+                      <th scope="col" style="font-family: 'Palatino', serif; font-weight: bold">Previous Close Price</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ quote.o }}</td>
+                      <td>{{ quote.pc }} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              {% else %}
+                <p style="font-family: 'Palatino', serif; font-weight: bold">No quote data available.</p>
+              {% endif %}
             {% else %}
-              <p>No quote data available.</p>
+              <p style="font-family: 'Palatino', serif; font-weight: bold">Enter a ticker symbol to view financial data.</p>
             {% endif %}
-          {% else %}
-            <p>Enter a ticker symbol to view financial data.</p>
-          {% endif %}
+              </div>
             </div>
           </div>
-        </div>
-
-
         </main>
       </div>
     </div>
